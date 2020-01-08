@@ -16,6 +16,6 @@
 
 ## 2020
 
-## January
+### January
 
 - MOOC CEGEP dataset EDM and LA
