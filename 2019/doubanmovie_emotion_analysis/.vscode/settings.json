@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "/Users/maywzh/.pyenv/versions/3.7.4/bin/python",
+    "python.formatting.provider": "autopep8"
+}
