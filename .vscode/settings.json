@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/maywzh/.pyenv/versions/venv-3.6.5-tf1.10/bin/python"
+    "python.pythonPath": "/Users/maywzh/.pyenv/versions/venv-3.6.5-tf1.10/bin/python",
+    "python.dataScience.jupyterServerURI": "local"
 }
