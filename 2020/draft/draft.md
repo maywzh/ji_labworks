@@ -99,10 +99,53 @@ The knowledge graph can be constructed in two ways: bottom-up and top-down. Bott
 
 ## Data Tracing 
 Knowledge tracking is a key issue in personalized tutorials, characterized by automation and personalization, with the task of automatically tracking the evolution of students' knowledge levels over time based on their historical learning trajectories so that they can accurately predict how they will perform in future learning and provide appropriate learning support. In this process, the knowledge space is used to describe the set of knowledge mastered by students, and some educational researchers argue that the exercises will test a specific set of related knowledge points, and students' mastery of the knowledge points examined in the exercises will affect their performance on the exercises, i.e., the set of knowledge mastered by students is closely related to their extrinsic performance on the questions.
+
+### Problem 
+The knowledge tracking task can be summarized as follows: given a sequence of observations of a student's performance on a particular learning task $x_0,x_1,...,x_t$ , and predict their performance on the next one $x_{t+1}$. The diagram below depicts a visual display of a student's knowledge tracking in an 8th grade math classroom. This student started with two correct answers to a question about square roots, then incorrectly answered a question about the X-axis intercept, followed by a series of questions about the X-axis intercept, the Y-axis intercept, and graphing linear equations (where square roots, the X-axis intercept, and the Y-axis intercept can all be considered as a knowledge point). As the student finishes each exercise we can predict how he will perform on the next topic, which can be a topic from a different knowledge point. In this figure we only predict mastery of the knowledge points that are relevant to the current exercise.
+![](./figs/fig1.png)
+
+
+Bayesian Knowledge Tracking (BKT) is the most popular model of knowledge tracking. In the BKT model a hidden variable is proposed about the knowledge state of the student, which is represented by a binary group {mastered that knowledge, did not master that knowledge}. The whole model structure is actually an HMM model that predicts the next state based on the state transfer matrix and the student's answer results based on the current state. And in the BKT model it is believed that once knowledge is mastered it is not forgotten. And the current work also introduces the probability of guessing the question correctly if the student does not have the knowledge and the probability of answering the question incorrectly if the student has the knowledge, the student's prior knowledge and the difficulty of the question to extend the model. However, with or without these extensions, several problems remain with the BKT model.
+
+- It is not practical to represent students' state of knowledge in binary groups.
+
+- The mapping between hidden states and practice doing questions is vague, making it difficult to adequately predict a concept for each exercise
+
+- The binary representation of the observation state will limit the type of topic
+
+　　Recurrent neural network is a time series model where information is propagated recursively based on earlier information and current input. Compared to HMM, RNN has high dimensional, continuous hidden state representation.The biggest advantage of RNN is that it can exploit more early information, especially the LSTM network structure, which is a variant of RNN.RNN has achieved very good results on many time series problems, so it may be better to apply RNN to knowledge tracking.
+
+　　Here we can use either the traditional RNN or the LSTM model. Before we enter the data into the model we need to convert the input data into a vector representation (the input data is the result of the questions we observed the students doing). The vector representation of the input values can be used in two ways.
+
+
+- One-hot representation.  The total length is 2M (note that the whole model is only concerned with the knowledge points to which the topic belongs, and the result of doing the question). one-hot representation is more convenient, but once the number of knowledge points is very large, the vector will become high-dimensional and sparse.
+- Compress the high-dimensional sparse input data into the low-dimensional space (log2Lu_1D440 ) by the compression-aware algorithm.
+
+　　The output result 𝑡 is a vector of length M. Each value in the vector describes the probability of mastery of the corresponding knowledge point (or the probability of answering the question under the corresponding knowledge point correctly). Thus, the entire sequence is a prediction of the mastery of each knowledge point at step 𝑖 based on information from the first 𝑖-1 time step.
+
+　　The loss function of the model is:
+
+$$\mathcal{L}=\frac{1}{\sum_{i=1}^{n}\left(T_{i}-1\right)}\left(\sum_{i=1}^{n} \sum_{t=1}^{T_{i}-1} l\left(\mathbf{y}_{t}^{i} \cdot \delta\left(q_{t+1}^{i}\right), a_{t+1}^{i}\right)\right)$$
+
+Dynamic Key-Value Memory Networks for Knowledge Tracing (abbreviated DKVMN), was proposed in 2017 by Jianshe Shiu of the Chinese University of Hong Kong. Based on the strengths and weaknesses of BKT and DKT and utilizing memory-enhanced neural networks, Dynamic Key-Value-to-Memory Networks (DKVMN) is proposed.
+
+It draws on the idea of memory-enhanced neural networks, combining the strengths of BKT and DKT. DKVMN uses a static matrix key to store the entire knowledge and a dynamic matrix value to store and update the student's knowledge state. In the DKVMN paper, they compared DKVMN and DKT, as well as a complex version of BKT, BKT+. They found that DKVMN achieved excellent performance and was the most advanced model in the KT domain. In addition to the improved performance, it has several remaining advantages over LSTM, including prevention of overfitting, a smaller number of parameters, and automatic discovery of similar exercises after potential concepts.
+
+![](./figs/DKVMN_architecture.png)
+
+
+Existing DKT requires human labeling that show the required skills to solve a question, which limits the capacity of the model and application to real-world data. Someone propose an end-to-end DKT model, which does not depend on any human labeling. Regarding the process of translating questions into tags as reducing the question-space dimension by a binary embedding matrix by introducing a new Q-Embedding Model.
+![](./figs/q-embedding.png)
+In order to learn the question-embedding matrix $P$, we introduce the Q-Embedding Model. We present the architecture of the model in Figure 1. In the the Q-Embedding Model, a student’s question-answer logs are directly used as the model’s input $x_t$, and the output $y_t$ is the predicted probability of the student answering each question correctly the next time. In addition, to learn the matrix that translates input question-space to low-dimensional tag-space, we add two hidden layers: $u_t$ and $v_t$ with a size of $2N_0$ and $N_0$ , respectively. Here, $N_0$ is the dimension of the tag-space and $P$ is a sigmoid-activated matrix with a size of $M \times N_0$. After training the model, we extract $P$ and binarize it to 0 and 1 on a certain condition. In addition to the DKT’s objective function $L_p$ in equation 1, in order to learn a better questionembedding matrix, we introduce two objective functions in the following equation:
+
+$$L_{r}=\sum_{t} l\left(\mathbf{x}_{t}^{\prime T} \tilde{\delta}\left(\mathbf{q}_{t}\right), \mathbf{a}_{t}\right)$$
+
+$$L_{s}=\sum_{t}\left(0.5-\left|\mathbf{u}_{t}-0.5\right|\right)$$
+
 ### Survey
 
 
-### Model
 
+### Model
 
 ### Evaluation
