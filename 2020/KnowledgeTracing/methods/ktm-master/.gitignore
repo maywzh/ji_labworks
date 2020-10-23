@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.xml
+tuto.tex
+assistments09
+libfm
+venv

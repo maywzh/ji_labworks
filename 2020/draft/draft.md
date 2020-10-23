@@ -127,13 +127,49 @@ Bayesian Knowledge Tracking (BKT) is the most popular model of knowledge trackin
 
 $$\mathcal{L}=\frac{1}{\sum_{i=1}^{n}\left(T_{i}-1\right)}\left(\sum_{i=1}^{n} \sum_{t=1}^{T_{i}-1} l\left(\mathbf{y}_{t}^{i} \cdot \delta\left(q_{t+1}^{i}\right), a_{t+1}^{i}\right)\right)$$
 
+
+
+
+
+
+### Survey
+#### Factorization Machines for Knowledge Tracing
+Knowledge tracing is a sequence prediction problem where the goal is to predict the outcomes of students over questions as they are interacting with a learning platform. By tracking the evolution of the knowledge of some student, one can optimize instruction. Existing methods are either based on temporal latent variable models, or factor analysis with temporal features. We here show that factorization machines (FMs), a model for regression or classification, encompasses several existing models in the educational literature as special cases, notably additive factor model, performance factor model, and multidimensional item response theory. We show, using several real datasets of tens of thousands of users and items, that FMs can estimate student knowledge accurately and fast even when student data is sparsely observed, and handle side information such as multiple knowledge components and number of attempts at item or skill level. Our approach allows to fit student models of higher dimension than existing models, and provides a testbed to try new combinations of features in order to improve existing models. 
+On the Assistments 2009 dataset:
+
+| Model                                  | Dimension | AUC       | Improvement |
+| -------------------------------------- | --------- | --------- | ----------- |
+| KTM: items, skills, wins, fails, extra | 5         | **0.819** |             |
+| KTM: items, skills, wins, fails, extra | 5         | 0.815     | +0.05       |
+| KTM: items, skills, wins, fails        | 10        | 0.767     |             |
+| KTM: items, skills, wins, fails        | 0         | 0.759     | +0.02       |
+| (*DKT* (Wilson et al., 2016))          | 100       | 0.743     | +0.05       |
+| IRT: users, items                      | 0         | 0.691     |             |
+| PFA: skills, wins, fails               | 0         | 0.685     | +0.07       |
+| AFM: skills, attempts                  | 0         | 0.616     |             |
+
+On the [Duolingo](http://sharedtask.duolingo.com/) French dataset:
+
+On the [Duolingo](http://sharedtask.duolingo.com/) French dataset:
+
+| Model                        | Dimension | AUC       | Improvement |
+| ---------------------------- | --------- | --------- | ----------- |
+| KTM                          | 20        | **0.822** | +0.01       |
+| DeepFM                       | 20        | 0.814     | +0.04       |
+| Logistic regression + L2 reg | 0         | 0.771     |             |
+
+
+
+![](figs/factorial.png)
+
+#### DKVMN
 Dynamic Key-Value Memory Networks for Knowledge Tracing (abbreviated DKVMN), was proposed in 2017 by Jianshe Shiu of the Chinese University of Hong Kong. Based on the strengths and weaknesses of BKT and DKT and utilizing memory-enhanced neural networks, Dynamic Key-Value-to-Memory Networks (DKVMN) is proposed.
+![](figs/DKVMN2.png)
 
 It draws on the idea of memory-enhanced neural networks, combining the strengths of BKT and DKT. DKVMN uses a static matrix key to store the entire knowledge and a dynamic matrix value to store and update the student's knowledge state. In the DKVMN paper, they compared DKVMN and DKT, as well as a complex version of BKT, BKT+. They found that DKVMN achieved excellent performance and was the most advanced model in the KT domain. In addition to the improved performance, it has several remaining advantages over LSTM, including prevention of overfitting, a smaller number of parameters, and automatic discovery of similar exercises after potential concepts.
 
 ![](./figs/DKVMN_architecture.png)
-
-
+#### End-to-end (2018)
 Existing DKT requires human labeling that show the required skills to solve a question, which limits the capacity of the model and application to real-world data. Someone propose an end-to-end DKT model, which does not depend on any human labeling. Regarding the process of translating questions into tags as reducing the question-space dimension by a binary embedding matrix by introducing a new Q-Embedding Model.
 ![](./figs/q-embedding.png)
 In order to learn the question-embedding matrix $P$, we introduce the Q-Embedding Model. We present the architecture of the model in Figure 1. In the the Q-Embedding Model, a student’s question-answer logs are directly used as the model’s input $x_t$, and the output $y_t$ is the predicted probability of the student answering each question correctly the next time. In addition, to learn the matrix that translates input question-space to low-dimensional tag-space, we add two hidden layers: $u_t$ and $v_t$ with a size of $2N_0$ and $N_0$ , respectively. Here, $N_0$ is the dimension of the tag-space and $P$ is a sigmoid-activated matrix with a size of $M \times N_0$. After training the model, we extract $P$ and binarize it to 0 and 1 on a certain condition. In addition to the DKT’s objective function $L_p$ in equation 1, in order to learn a better questionembedding matrix, we introduce two objective functions in the following equation:
@@ -142,10 +178,27 @@ $$L_{r}=\sum_{t} l\left(\mathbf{x}_{t}^{\prime T} \tilde{\delta}\left(\mathbf{q}
 
 $$L_{s}=\sum_{t}\left(0.5-\left|\mathbf{u}_{t}-0.5\right|\right)$$
 
-### Survey
+#### Prerequisite-Driven Deep Knowledge Tracing
+Penghe Chen et al. take into account the sparsity of the data when using DKT (the SKILL space is larger and students are more limited in doing the questions), and to solve the inaccurate model evaluation due to the sparsity of the data, they propose to incorporate information about the knowledge structure into the model to solve the above problems, specifically to consider the before-and-after relationship of incoming knowledge.
+The core idea is that:
+If $K_1$ is the antecedent of $K_2$ 
 
 
+$$\begin{array}{l}
+\max _{\Theta} \log \prod_{i} \prod_{t} P\left(y_{i, \pi(i, t), t} \mid \mathbf{s}_{i}, \Theta\right) \\
+\text { s.t. } P\left(m_{i, k_{2}, t_{2}}=1\right) \leq P\left(m_{i, k_{1}, t_{1}}=1\right) \\
+\forall\left(k_{1}, k_{2}\right) \in E \& y_{i, \pi\left(i, t_{1}\right), t_{1}}=y_{i, \pi\left(i, t_{2}\right), t_{2}}
+\end{array}$$
 
+
+#### Towards an Appropriate Query, Key, and Value Computation for Knowledge Tracing
+
+Knowledge tracing, the act of modeling a student’s knowledge through learning activities, is an extensively studied problem in the field of computer-aided education. Armed with attention mechanisms focusing on relevant information for target prediction, recurrent neural networks and transformer-based knowledge tracing models have outperformed traditional approaches such as Bayesian knowledge tracing and collaborative filtering. However, the attention mechanisms of current state-of-the-art knowledge tracing models share two limitations. Firstly, the models fail to leverage deep self-attentive computations for knowledge tracing. As a result, they fail to capture complex relations among exercises and responses over time. Secondly, appropriate features for constructing queries, keys and values for the self-attention layer for knowledge tracing have not been extensively explored. The usual practice of using exercises and interactions (exercise-response pairs), as queries and keys/values, respectively, lacks empirical support.
+
+In this paper, we propose a novel Transformer-based model for knowledge tracing, SAINT: Separated Self-AttentIve Neural Knowledge Tracing. SAINT has an encoder-decoder structure where the exercise and response embedding sequences separately enter, respectively, the encoder and the decoder. The encoder applies self-attention layers to the sequence of exercise embeddings, and the decoder alternately applies selfattention layers and encoder-decoder attention layers to the sequence of response embeddings. This separation of input allows us to stack attention layers multiple times, resulting in an improvement in area under receiver operating characteristic curve (AUC). To the best of our  knowledge, this is the  first work to suggest an encoder-decoder model for knowledge tracing that applies deep self-attentive layers to exercises and responses separately. We empirically evaluate SAINT on a large-scale knowledge tracing dataset, EdNet, collected by an active mobile education
+![](./figs/premodel.png)
+
+![](./figs/themod.png)
 ### Model
 
 ### Evaluation
