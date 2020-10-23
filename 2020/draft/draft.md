@@ -133,6 +133,14 @@ $$\mathcal{L}=\frac{1}{\sum_{i=1}^{n}\left(T_{i}-1\right)}\left(\sum_{i=1}^{n} \
 
 
 ### Survey
+#### Deep Knowledge Tracing and Dynamic Student Classification for Knowledge Tracing
+Tracking a student's knowledge state during the learning process has been studied in Intelligent Tutoring Systems (ITS). In order to provide more supportive learning instructions, we propose a new knowledge-tracking model. In this paper, we propose a novel knowledge-tracking model that: i) captures students' learning abilities and dynamically assigns them to different groups with similar abilities at fixed time intervals; and ii) combines this information with a recurrent neural network architecture called deep knowledge tracking. The experimental results confirm that the proposed model is significantly superior to known state-of-the-art techniques for student modeling in predicting student performance.
+
+![](figs/studenttracing.png)
+
+#### AKT
+
+
 #### Factorization Machines for Knowledge Tracing
 Knowledge tracing is a sequence prediction problem where the goal is to predict the outcomes of students over questions as they are interacting with a learning platform. By tracking the evolution of the knowledge of some student, one can optimize instruction. Existing methods are either based on temporal latent variable models, or factor analysis with temporal features. We here show that factorization machines (FMs), a model for regression or classification, encompasses several existing models in the educational literature as special cases, notably additive factor model, performance factor model, and multidimensional item response theory. We show, using several real datasets of tens of thousands of users and items, that FMs can estimate student knowledge accurately and fast even when student data is sparsely observed, and handle side information such as multiple knowledge components and number of attempts at item or skill level. Our approach allows to fit student models of higher dimension than existing models, and provides a testbed to try new combinations of features in order to improve existing models. 
 On the Assistments 2009 dataset:
@@ -161,6 +169,8 @@ On the [Duolingo](http://sharedtask.duolingo.com/) French dataset:
 
 
 ![](figs/factorial.png)
+
+
 
 #### DKVMN
 Dynamic Key-Value Memory Networks for Knowledge Tracing (abbreviated DKVMN), was proposed in 2017 by Jianshe Shiu of the Chinese University of Hong Kong. Based on the strengths and weaknesses of BKT and DKT and utilizing memory-enhanced neural networks, Dynamic Key-Value-to-Memory Networks (DKVMN) is proposed.
