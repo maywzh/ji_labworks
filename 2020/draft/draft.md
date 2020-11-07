@@ -1,6 +1,8 @@
 # Personalized High School Math Exercises Recommendation based on Knowledge Graph Completion and Knowledge Tracing
 
-## Introduction
+## Introductio$$
+
+$$n
 
 In the context of the popularity of artificial intelligence technology, AI has become a trend in various industries. The theoretical breakthrough has brought about large-scale commercial applications and profoundly changed social development. 
 
