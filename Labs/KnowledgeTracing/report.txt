@@ -1,0 +1,127 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 5 files
+Detected 11 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: deep-knowledge-tracing-plus-master/model.py
+--------------------------------------------------------------------------------
+deep-knowledge-tracing-plus-master/model.py:66:23: WARNING: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+deep-knowledge-tracing-plus-master/model.py:66:23: ERROR: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib. tf.contrib.rnn.DropoutWrapper cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+deep-knowledge-tracing-plus-master/model.py:84:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+deep-knowledge-tracing-plus-master/model.py:86:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+--------------------------------------------------------------------------------
+File: deep-knowledge-tracing-plus-master/search_hyperparameter.py
+--------------------------------------------------------------------------------
+deep-knowledge-tracing-plus-master/search_hyperparameter.py:54:26: WARNING: tf.contrib.rnn.LayerNormBasicLSTMCell requires manual check. (Manual edit required) `tf.contrib.rnn.LayerNormBasicLSTMCell` has been migrated to `tfa.rnn.LayerNormLSTMCell` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+deep-knowledge-tracing-plus-master/search_hyperparameter.py:54:26: WARNING: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+deep-knowledge-tracing-plus-master/search_hyperparameter.py:54:26: ERROR: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib. tf.contrib.rnn.LayerNormBasicLSTMCell cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+--------------------------------------------------------------------------------
+File: deep-knowledge-tracing-plus-master/utils.py
+--------------------------------------------------------------------------------
+deep-knowledge-tracing-plus-master/utils.py:269:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+File: deep-knowledge-tracing-plus-master/main.py
+--------------------------------------------------------------------------------
+deep-knowledge-tracing-plus-master/main.py:66:26: WARNING: tf.contrib.rnn.LayerNormBasicLSTMCell requires manual check. (Manual edit required) `tf.contrib.rnn.LayerNormBasicLSTMCell` has been migrated to `tfa.rnn.LayerNormLSTMCell` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+deep-knowledge-tracing-plus-master/main.py:66:26: WARNING: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+deep-knowledge-tracing-plus-master/main.py:66:26: ERROR: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib. tf.contrib.rnn.LayerNormBasicLSTMCell cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: 'deep-knowledge-tracing-plus-master'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'deep-knowledge-tracing-plus-master/model.py'
+ outputting to 'dkt-v2/model.py'
+--------------------------------------------------------------------------------
+
+11:19: INFO: Added keywords to args of function 'tf.reduce_max'
+12:17: INFO: Added keywords to args of function 'tf.reduce_sum'
+24:26: INFO: Renamed 'tf.contrib.rnn.LSTMCell' to 'tf.compat.v1.nn.rnn_cell.LSTMCell'
+47:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+48:21: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+49:22: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+50:25: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+64:17: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+64:62: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+66:23: WARNING: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+66:23: ERROR: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib. tf.contrib.rnn.DropoutWrapper cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+67:33: INFO: Renamed 'tf.nn.dynamic_rnn' to 'tf.compat.v1.nn.dynamic_rnn'
+83:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+83:53: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+84:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+84:19: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+85:47: INFO: tf.random_normal_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+85:47: INFO: Renamed 'tf.random_normal_initializer' to 'tf.compat.v1.random_normal_initializer'
+86:19: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+86:19: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+87:47: INFO: tf.random_normal_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+87:47: INFO: Renamed 'tf.random_normal_initializer' to 'tf.compat.v1.random_normal_initializer'
+90:24: INFO: Added keywords to args of function 'tf.shape'
+104:29: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+113:24: INFO: Added keywords to args of function 'tf.reduce_mean'
+119:42: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+126:41: INFO: Added keywords to args of function 'tf.reduce_mean'
+131:35: INFO: Added keywords to args of function 'tf.reduce_sum'
+136:31: INFO: Added keywords to args of function 'tf.reduce_sum'
+142:31: INFO: Added keywords to args of function 'tf.reduce_sum'
+148:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+149:29: INFO: Renamed 'tf.train.AdamOptimizer' to 'tf.compat.v1.train.AdamOptimizer'
+164:8: INFO: Renamed 'tf.get_variable_scope' to 'tf.compat.v1.get_variable_scope'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'deep-knowledge-tracing-plus-master/search_hyperparameter.py'
+ outputting to 'dkt-v2/search_hyperparameter.py'
+--------------------------------------------------------------------------------
+
+51:12: INFO: Renamed 'tf.contrib.rnn.LSTMCell' to 'tf.compat.v1.nn.rnn_cell.LSTMCell'
+52:11: INFO: Renamed 'tf.contrib.rnn.GRUCell' to 'tf.compat.v1.nn.rnn_cell.GRUCell'
+53:16: INFO: Renamed 'tf.contrib.rnn.BasicRNNCell' to 'tf.compat.v1.nn.rnn_cell.BasicRNNCell'
+54:26: WARNING: tf.contrib.rnn.LayerNormBasicLSTMCell requires manual check. (Manual edit required) `tf.contrib.rnn.LayerNormBasicLSTMCell` has been migrated to `tfa.rnn.LayerNormLSTMCell` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+54:26: WARNING: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+54:26: ERROR: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib. tf.contrib.rnn.LayerNormBasicLSTMCell cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+104:25: INFO: Renamed 'tf.ConfigProto' to 'tf.compat.v1.ConfigProto'
+106:23: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+128:16: INFO: Renamed 'tf.reset_default_graph' to 'tf.compat.v1.reset_default_graph'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'deep-knowledge-tracing-plus-master/utils.py'
+ outputting to 'dkt-v2/utils.py'
+--------------------------------------------------------------------------------
+
+179:21: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+265:16: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+269:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+274:16: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'deep-knowledge-tracing-plus-master/main.py'
+ outputting to 'dkt-v2/main.py'
+--------------------------------------------------------------------------------
+
+63:12: INFO: Renamed 'tf.contrib.rnn.LSTMCell' to 'tf.compat.v1.nn.rnn_cell.LSTMCell'
+64:11: INFO: Renamed 'tf.contrib.rnn.GRUCell' to 'tf.compat.v1.nn.rnn_cell.GRUCell'
+65:16: INFO: Renamed 'tf.contrib.rnn.BasicRNNCell' to 'tf.compat.v1.nn.rnn_cell.BasicRNNCell'
+66:26: WARNING: tf.contrib.rnn.LayerNormBasicLSTMCell requires manual check. (Manual edit required) `tf.contrib.rnn.LayerNormBasicLSTMCell` has been migrated to `tfa.rnn.LayerNormLSTMCell` in TensorFlow Addons. The API spec may have changed during the migration. Please see https://github.com/tensorflow/addons for more info.
+66:26: WARNING: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+66:26: ERROR: Using member tf.contrib.rnn.LayerNormBasicLSTMCell in deprecated module tf.contrib. tf.contrib.rnn.LayerNormBasicLSTMCell cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+117:13: INFO: Renamed 'tf.ConfigProto' to 'tf.compat.v1.ConfigProto'
+119:11: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'deep-knowledge-tracing-plus-master/load_data.py'
+ outputting to 'dkt-v2/load_data.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
