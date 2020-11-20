@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-
+import tensorflow_addons as tfa
 
 def length(sequence):
     """
@@ -63,7 +63,7 @@ class Model(object):
             variable_scope_name = "hidden_layer_{}".format(i)
             with tf.compat.v1.variable_scope(variable_scope_name, reuse=tf.compat.v1.get_variable_scope().reuse):
                 cell = self.rnn_cell(num_units=layer_state_size)
-                cell = tf.contrib.rnn.DropoutWrapper(cell, output_keep_prob=self.keep_prob)
+                cell = tf.compat.v1.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=self.keep_prob)
                 outputs, state = tf.compat.v1.nn.dynamic_rnn(
                     cell,
                     hidden_layer_input,
