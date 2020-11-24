@@ -10,7 +10,7 @@ from sklearn import metrics
 from math import sqrt
 import os
 from numpy import array
-from sklearn.cross_validation import KFold
+from sklearn.model_selection import KFold
 import math
 import pandas as pd
 
